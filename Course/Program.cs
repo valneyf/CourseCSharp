@@ -7,31 +7,27 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            Pessoa primPessoa, segPessoa;
+            Funcionario primFunc, segFunc;
+            double media;
             
-            primPessoa = new Pessoa();
-            segPessoa = new Pessoa();
+            primFunc = new Funcionario();
+            segFunc = new Funcionario();
 
             Console.WriteLine("Dados da primeira pessoa:");
             Console.Write("Nome: ");
-            primPessoa.Nome = Console.ReadLine();
-            Console.Write("Idade: ");
-            primPessoa.Idade = int.Parse(Console.ReadLine());
+            primFunc.Nome = Console.ReadLine();
+            Console.Write("Salário: ");
+            primFunc.Salario = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
             Console.WriteLine("Dados da segunda pessoa:");
             Console.Write("Nome: ");
-            segPessoa.Nome = Console.ReadLine();
-            Console.Write("Idade: ");
-            segPessoa.Idade = int.Parse(Console.ReadLine());
+            segFunc.Nome = Console.ReadLine();
+            Console.Write("Salário: ");
+            segFunc.Salario = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            if (primPessoa.Idade > segPessoa.Idade)
-            {
-                Console.WriteLine("Pessoa mais velha: " + primPessoa.Nome);
-            }
-            else
-            {
-                Console.WriteLine("Pessoa mais velha: " + segPessoa.Nome);
-            }
+            media = (primFunc.Salario + segFunc.Salario) / 2.00;
+
+            Console.WriteLine("Salário médio = " + media.ToString("F2", CultureInfo.InvariantCulture));
         }
     }
 }

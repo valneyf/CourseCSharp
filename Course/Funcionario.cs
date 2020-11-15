@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Course
 {
-    class Pessoa
+    class Funcionario
     {
         public string Nome;
-        public int Idade;
+        public double Salario;
     }
 }
