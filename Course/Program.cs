@@ -7,16 +7,26 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            Retangulo ret = new Retangulo();
-            
-            Console.WriteLine("Entre com a largura e altura do retângulo:");
-            ret.Largura = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            ret.Altura = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Funcionario f1 = new Funcionario();
 
-            Console.WriteLine($"AREA = {ret.Area().ToString("F2", CultureInfo.InvariantCulture)}");
-            Console.WriteLine($"PERÍMETRO = {ret.Perimetro().ToString("F2", CultureInfo.InvariantCulture)}");
-            Console.WriteLine($"DIAGONAL = {ret.Diagonal().ToString("F2", CultureInfo.InvariantCulture)}");
+            Console.Write("Nome: ");
+            f1.Nome = Console.ReadLine();
+            Console.Write("Salário Bruto: ");
+            f1.SalarioBruto = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.Write("Imposto: ");
+            f1.Imposto = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
+            Console.WriteLine();
+            Console.WriteLine("Funcionário: " + f1);
+
+            Console.WriteLine();
+            Console.Write("Digite a porcentagem para aumentar o salário: ");
+            double porcen = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+            f1.AumentarSalario(porcen);
+
+            Console.WriteLine();
+            Console.WriteLine("Dados atualizados: " + f1);
         }
     }
 }
