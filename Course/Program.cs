@@ -7,27 +7,35 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            Funcionario primFunc, segFunc;
-            double media;
-            
-            primFunc = new Funcionario();
-            segFunc = new Funcionario();
+            Triangulo x, y;
 
-            Console.WriteLine("Dados da primeira pessoa:");
-            Console.Write("Nome: ");
-            primFunc.Nome = Console.ReadLine();
-            Console.Write("Salário: ");
-            primFunc.Salario = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            x = new Triangulo();
+            y = new Triangulo();
 
-            Console.WriteLine("Dados da segunda pessoa:");
-            Console.Write("Nome: ");
-            segFunc.Nome = Console.ReadLine();
-            Console.Write("Salário: ");
-            segFunc.Salario = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.WriteLine("Entre com as medidas do triângulo X:");
+            x.A = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            x.B = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            x.C = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            media = (primFunc.Salario + segFunc.Salario) / 2.00;
+            Console.WriteLine("Entre com as medidas do triângulo Y:");
+            y.A = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            y.B = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            y.C = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            Console.WriteLine("Salário médio = " + media.ToString("F2", CultureInfo.InvariantCulture));
+            double areaX = x.Area();
+            double areaY = y.Area();
+
+            Console.WriteLine("Área de X = " + areaX.ToString("F4", CultureInfo.InvariantCulture));
+            Console.WriteLine("Área de Y = " + areaY.ToString("F4", CultureInfo.InvariantCulture));
+
+            if (areaX > areaY)
+            {
+                Console.WriteLine("Maior área: X");
+            }
+            else
+            {
+                Console.WriteLine("Maior área: Y");
+            }
         }
     }
 }
