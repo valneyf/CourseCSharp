@@ -7,37 +7,30 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            Triangulo x, y;
+            Pessoa primPessoa, segPessoa;
+            
+            primPessoa = new Pessoa();
+            segPessoa = new Pessoa();
 
-            x = new Triangulo();
-            y = new Triangulo();
+            Console.WriteLine("Dados da primeira pessoa:");
+            Console.Write("Nome: ");
+            primPessoa.Nome = Console.ReadLine();
+            Console.Write("Idade: ");
+            primPessoa.Idade = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Entre com as medidas do triângulo X:");
-            x.A = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            x.B = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            x.C = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.WriteLine("Dados da segunda pessoa:");
+            Console.Write("Nome: ");
+            segPessoa.Nome = Console.ReadLine();
+            Console.Write("Idade: ");
+            segPessoa.Idade = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Entre com as medidas do triângulo Y:");
-            y.A = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            y.B = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            y.C = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-
-            double p = (x.A + x.B + x.C) / 2.0;
-            double areaX = Math.Sqrt(p * (p - x.A) * (p - x.B) * (p - x.C));
-
-            p = (y.A + y.B + y.C) / 2.0;
-            double areaY = Math.Sqrt(p * (p - y.A) * (p - y.B) * (p - y.C));
-
-            Console.WriteLine("Área de X = " + areaX.ToString("F4", CultureInfo.InvariantCulture));
-            Console.WriteLine("Área de Y = " + areaY.ToString("F4", CultureInfo.InvariantCulture));
-
-            if (areaX > areaY)
+            if (primPessoa.Idade > segPessoa.Idade)
             {
-                Console.WriteLine("Maior área: X");
+                Console.WriteLine("Pessoa mais velha: " + primPessoa.Nome);
             }
             else
             {
-                Console.WriteLine("Maior área: Y");
+                Console.WriteLine("Pessoa mais velha: " + segPessoa.Nome);
             }
         }
     }
