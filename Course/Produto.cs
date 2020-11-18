@@ -18,6 +18,7 @@ namespace Course
         public int Quantidade { get; private set; }
         //
 
+        // Construtores
         public Produto()
         {
 
@@ -29,7 +30,9 @@ namespace Course
             Preco = preco;
             Quantidade = quantidade;
         }
+        //
 
+        // Property Customizada
         // Property para o atributo nome
         // A palavra reservada "value" refere-se ao input(entrada)
         // Usuário
@@ -43,8 +46,9 @@ namespace Course
                 }
             }
         }
+        //
 
-        
+        // Outras Classes
         public double ValorTotalEmEstoque()
         {
             return Preco * Quantidade;
