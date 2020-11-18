@@ -12,8 +12,11 @@ namespace Course
         // underline seguido pela primeira letra
         // minúscula;
         private string _nome;
-        private double _preco;
-        private int _quantidade;
+
+        // Auto Properties
+        public double Preco { get; private set; }
+        public int Quantidade { get; private set; }
+        //
 
         public Produto()
         {
@@ -23,8 +26,8 @@ namespace Course
         public Produto(string nome, double preco, int quantidade)
         {
             _nome = nome;
-            _preco = preco;
-            _quantidade = quantidade;
+            Preco = preco;
+            Quantidade = quantidade;
         }
 
         // Property para o atributo nome
@@ -41,39 +44,31 @@ namespace Course
             }
         }
 
-        public double Preco
-        {
-            get { return _preco; }
-        }
-
-        public int Quantidade
-        {
-            get { return _quantidade; }
-        }
+        
         public double ValorTotalEmEstoque()
         {
-            return _preco * _quantidade;
+            return Preco * Quantidade;
         }
 
         public override string ToString()
         {
             return _nome
                 + ", $ "
-                + _preco.ToString("F2", CultureInfo.InvariantCulture)
+                + Preco.ToString("F2", CultureInfo.InvariantCulture)
                 + ", "
-                + _quantidade
+                + Quantidade
                 + " unidades, Total: $ "
                 + ValorTotalEmEstoque().ToString("F2", CultureInfo.InvariantCulture); 
         }
 
         public void AdicionarProdutos(int quantity)
         {
-            _quantidade += quantity;
+            Quantidade += quantity;
         }
 
         public void RemoverProdutos(int quantity)
         {
-            _quantidade -= quantity;
+            Quantidade -= quantity;
         }
     }
 }
