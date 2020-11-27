@@ -7,27 +7,35 @@ namespace Course
     {
         static void Main(string[] args)
         {
+            Console.Write("Quantos quartos serão alugados? ");
             int n = int.Parse(Console.ReadLine());
 
-            Product[] vect = new Product[n];
-                                   
-            for (int i = 0; i < n; i++)
+            Rentail[] vect = new Rentail[10];
+                                  
+            for (int i = 1; i <= n; i++)
             {
-                
+                Console.WriteLine();
+                Console.WriteLine($"Aluguel #{i}:");
+                Console.Write("Nome: ");
                 string name = Console.ReadLine();
-                double price = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                vect[i] = new Product { Name = name, Price = price };
+
+                Console.Write("Email: ");
+                string email = Console.ReadLine();
+
+                Console.Write("Quarto: ");
+                int room = int.Parse(Console.ReadLine());
+                vect[room] = new Rentail { Name = name, Email = email };
             }
 
-            double sum = 0.0;
-            for (int i = 0; i < n; i++)
+            Console.WriteLine();
+            Console.WriteLine("Quartos ocupados:");
+            for (int i = 0; i < 10; i++)
             {
-                sum += vect[i].Price;
+                if (vect[i] != null)
+                {
+                    Console.WriteLine($"{i}: {vect[i].Name}, {vect[i].Email}");
+                }
             }
-
-            double avg = sum / n;
-
-            Console.WriteLine("AVERAGE PRICE: " + avg.ToString("F2",CultureInfo.InvariantCulture));
         }
     }
 }
