@@ -5,44 +5,36 @@ using System.Collections.Generic;
 namespace Course {
     class Program {
         static void Main(string[] args) {
-            List<Employee> list = new List<Employee>();
+            Console.Write("Enter the size of matrix: ");
+            int n = int.Parse(Console.ReadLine());
 
-            Console.Write("How many employees will be registered? ");
-            int record = int.Parse(Console.ReadLine());
+            int[,] mat = new int[n, n];
 
-            for (int i = 1; i <= record; i++) {
-                Console.WriteLine($"Employee #{i}:");
-                Console.Write("Id: ");
-                int id = int.Parse(Console.ReadLine());
+            List<int> diagonal = new List<int>();
 
-                Console.Write("Name: ");
-                string name = Console.ReadLine();
+            int negativeNumbers = 0;
 
-                Console.Write("Salary: ");
-                double salary = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    Console.Write("Enter the value of the matrix for position: ");
+                    mat[i, j] = int.Parse(Console.ReadLine());
 
-                list.Add(new Employee(id, name, salary));
-                Console.WriteLine();
+                    if (i == j) {
+                        diagonal.Add(mat[i, j]);
+                    }
+
+                    if (mat[i, j] < 0) {
+                        negativeNumbers++;
+                    }
+                }
             }
 
-            Console.Write("Enter the employee id that will have salary increase: ");
-            int searchID = int.Parse(Console.ReadLine());
-
-            Employee busca = list.Find(x => x.Id == searchID);
-            if (busca != null) {
-                Console.Write("Enter the percentage: ");
-                double percentage = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                busca.IncreaseSalary(percentage);
+            Console.WriteLine("Main diagonal:");
+            foreach (int obj in diagonal) {
+                Console.Write(obj + " ");
             }
-            else {
-                Console.WriteLine("This id does not exist!");
-            }
-
             Console.WriteLine();
-            Console.WriteLine("Updated list of employees:");
-            foreach (Employee obj in list) {
-                Console.WriteLine(obj);
-            }
+            Console.WriteLine("Negative numbers = " + negativeNumbers);
         }
     }
 }
