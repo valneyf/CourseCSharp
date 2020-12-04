@@ -5,36 +5,58 @@ using System.Collections.Generic;
 namespace Course {
     class Program {
         static void Main(string[] args) {
-            Console.Write("Enter the size of matrix: ");
-            int n = int.Parse(Console.ReadLine());
+            Console.Write("Enter the number of lines and columns of matrix: ");
+            string[] numbers = Console.ReadLine().Split(" ");
 
-            int[,] mat = new int[n, n];
+            int m = int.Parse(numbers[0]);
+            int n = int.Parse(numbers[1]);
 
-            List<int> diagonal = new List<int>();
+            int[,] mat = new int[m, n];
 
-            int negativeNumbers = 0;
+            //List<int> list = new List<int>();
 
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < m; i++) {
+                Console.WriteLine($"Enter the values #{i + 1} line of matrix:");
+                string[] values = Console.ReadLine().Split(" ");
                 for (int j = 0; j < n; j++) {
-                    Console.Write("Enter the value of the matrix for position: ");
-                    mat[i, j] = int.Parse(Console.ReadLine());
-
-                    if (i == j) {
-                        diagonal.Add(mat[i, j]);
-                    }
-
-                    if (mat[i, j] < 0) {
-                        negativeNumbers++;
-                    }
+                    mat[i, j] = int.Parse(values[j]);
                 }
             }
 
-            Console.WriteLine("Main diagonal:");
-            foreach (int obj in diagonal) {
-                Console.Write(obj + " ");
+            Console.WriteLine("Enter the wish number of the matrix:");
+            int x = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (mat[i, j] == x) {
+                        Console.WriteLine($"Position {i},{j}:");
+
+                        // Left
+                        if (j > 0 && j <= n) {
+                            Console.Write("Left: " + mat[i, j - 1]);
+                            Console.WriteLine();
+                        }
+
+                        // Right
+                        if (j >= 0 && j < n - 1) {
+                            Console.Write("Right: " + mat[i, j + 1]);
+                            Console.WriteLine();
+                        }
+
+                        // Up
+                        if (i > 0 && i <= m) {
+                            Console.Write("Up: " + mat[i - 1, j]);
+                            Console.WriteLine();
+                        }
+
+                        // Down
+                        if (i >= 0 && i < m - 1) {
+                            Console.Write("Down: " + mat[i + 1, j]);
+                            Console.WriteLine();
+                        }
+                    }
+                }
             }
-            Console.WriteLine();
-            Console.WriteLine("Negative numbers = " + negativeNumbers);
         }
     }
 }
