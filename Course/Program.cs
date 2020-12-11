@@ -1,62 +1,51 @@
 ﻿using System;
 using System.Globalization;
 using System.Collections.Generic;
+using Course.Entities;
+using Course.Entities.Enums;
 
 namespace Course {
     class Program {
         static void Main(string[] args) {
-            Console.Write("Enter the number of lines and columns of matrix: ");
-            string[] numbers = Console.ReadLine().Split(" ");
+            Console.Write("Enter departament's name: ");
+            string deptName = Console.ReadLine();
+            Console.WriteLine("Enter worker data:");
+            Console.Write("Name: ");
+            string name = Console.ReadLine();
+            Console.Write("Level (Junior/MidLevel/Senior): ");
+            WorkLevel level = Enum.Parse<WorkLevel>(Console.ReadLine());
+            Console.Write("Base salary: ");
+            double baseSalary = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            int m = int.Parse(numbers[0]);
-            int n = int.Parse(numbers[1]);
+            Departament dept = new Departament(deptName);
+            Worker worker = new Worker(name, level, baseSalary, dept);
 
-            int[,] mat = new int[m, n];
+            Console.Write("How many contracts to this worker? ");
+            int n = int.Parse(Console.ReadLine());
 
-            //List<int> list = new List<int>();
+            for (int i = 1; i <= n; i++)
+            {
+                Console.WriteLine($"Enter #{i} contract data:");
+                Console.Write("Date (DD/MM/YYYY): ");
+                DateTime date = DateTime.Parse(Console.ReadLine());
+                Console.Write("Value per hour: ");
+                double valuePerHour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                Console.Write("Duration (hours): ");
+                int hours = int.Parse(Console.ReadLine());
+                HourContract contract = new HourContract(date, valuePerHour, hours);
 
-            for (int i = 0; i < m; i++) {
-                Console.WriteLine($"Enter the values #{i + 1} line of matrix:");
-                string[] values = Console.ReadLine().Split(" ");
-                for (int j = 0; j < n; j++) {
-                    mat[i, j] = int.Parse(values[j]);
-                }
+                worker.AddContract(contract);
             }
 
-            Console.WriteLine("Enter the wish number of the matrix:");
-            int x = int.Parse(Console.ReadLine());
+            Console.WriteLine();
+            Console.Write("Enter month and year to calculate income (MM/YYYY): ");
+            string monthAndYear = Console.ReadLine();
+            int month = int.Parse(monthAndYear.Substring(0, 2));
+            int year = int.Parse(monthAndYear.Substring(3));
 
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (mat[i, j] == x) {
-                        Console.WriteLine($"Position {i},{j}:");
-
-                        // Left
-                        if (j > 0 && j <= n) {
-                            Console.Write("Left: " + mat[i, j - 1]);
-                            Console.WriteLine();
-                        }
-
-                        // Right
-                        if (j >= 0 && j < n - 1) {
-                            Console.Write("Right: " + mat[i, j + 1]);
-                            Console.WriteLine();
-                        }
-
-                        // Up
-                        if (i > 0 && i <= m) {
-                            Console.Write("Up: " + mat[i - 1, j]);
-                            Console.WriteLine();
-                        }
-
-                        // Down
-                        if (i >= 0 && i < m - 1) {
-                            Console.Write("Down: " + mat[i + 1, j]);
-                            Console.WriteLine();
-                        }
-                    }
-                }
-            }
+            Console.WriteLine("Name: " + worker.Name);
+            Console.WriteLine("Department: " + worker.Departament.Name);
+            Console.WriteLine($"Income for {monthAndYear}: " + worker.Income(year, month).ToString("F2", CultureInfo.InvariantCulture));
         }
     }
 }
