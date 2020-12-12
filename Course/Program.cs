@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Collections.Generic;
 using Course.Entities;
+using Course.Entities.Enums;
 
 namespace Course
 {
@@ -9,33 +10,41 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            Comment c1 = new Comment("Have a nice trip!");
-            Comment c2 = new Comment("Wow! That's awesome!");
+            Console.WriteLine("Enter client data:");
+            Console.Write("Name: ");
+            string name = Console.ReadLine();
+            Console.Write("Email: ");
+            string email = Console.ReadLine();
+            Console.Write("Birth date (DD/MM/YYYY): ");
+            DateTime birthDate = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Enter order data:");
+            Console.Write("Status: ");
+            OrderStatus status = Enum.Parse<OrderStatus>(Console.ReadLine());
 
-            Post p1 = new Post(
-                DateTime.Parse("21/06/2018 13:05:44"),
-                "Traveling to New Zealand",
-                "I'm going to visit this wonderful country!",
-                12
-                );
-            p1.AddComment(c1);
-            p1.AddComment(c2);
+            Client client = new Client(name, email, birthDate);
 
-            Comment c3 = new Comment("Good night");
-            Comment c4 = new Comment("May the Force be with you");
+            Order order = new Order(status, client);
 
-            Post p2 = new Post(
-                DateTime.Parse("28/07/2018 23:14:19"),
-                "Good night guys",
-                "See you tomorrow",
-                5
-                );
-            p2.AddComment(c3);
-            p2.AddComment(c4);
+            Console.Write("How many items to this order? ");
+            int n = int.Parse(Console.ReadLine());
 
-            Console.WriteLine(p1);
-            Console.WriteLine(p2);
+            for (int i = 1; i <= n; i++)
+            {
+                Console.WriteLine($"Enter #{i} item data:");
+                Console.Write("Product name: ");
+                string prodName = Console.ReadLine();
+                Console.Write("Product price: ");
+                double prodPrice = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                Console.Write("Quantity: ");
+                int prodQuantity = int.Parse(Console.ReadLine());
 
+                OrderItem item = new OrderItem(prodQuantity, prodPrice, prodName);
+
+                order.AddItem(item);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(order);
         }
     }
 }
