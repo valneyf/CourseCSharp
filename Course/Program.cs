@@ -9,14 +9,40 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            Account acc1 = new Account(1001, "Alex", 500.0);
-            Account acc2 = new SavingsAccount(1002, "Anna", 500.0, 0.01);
+            Console.Write("Enter the number of employees: ");
+            int n = int.Parse(Console.ReadLine());
+            List<Employee> Employees = new List<Employee>(n);
 
-            acc1.Withdraw(10.0);
-            acc2.Withdraw(10.0);
+            for (int i = 1; i <= n; i++)
+            {                
+                Console.WriteLine($"Employee #{i} data:");
+                Console.Write("Outsourced (y/n)? ");
+                char type = char.ToLower(char.Parse(Console.ReadLine()));
+                Console.Write("Name: ");
+                string name = Console.ReadLine();
+                Console.Write("Hours: ");
+                int hours = int.Parse(Console.ReadLine());
+                Console.Write("Value per hour: ");
+                double perHour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            Console.WriteLine(acc1.Balance);
-            Console.WriteLine(acc2.Balance);
+                if (type == 'y')
+                {
+                    Console.Write("Additional charge: ");
+                    double addCharge = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    Employees.Add(new OutsourcedEmployee(name, hours, perHour, addCharge));                    
+                }
+                else
+                {
+                    Employees.Add(new Employee(name, hours, perHour));
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("PAYMENTS");
+            foreach (Employee employee in Employees)
+            {
+                Console.WriteLine(employee);
+            }
         }
     }
 }
