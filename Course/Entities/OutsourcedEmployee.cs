@@ -23,12 +23,5 @@ namespace Course.Entities
         {
             return base.Payment() + AdditionalCharge * 1.1;
         }
-
-        public override string ToString()
-        {
-            return Name
-                + " - $"
-                + Payment().ToString("F2", CultureInfo.InvariantCulture);
-        }
     }
 }

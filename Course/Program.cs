@@ -11,7 +11,7 @@ namespace Course
         {
             Console.Write("Enter the number of employees: ");
             int n = int.Parse(Console.ReadLine());
-            List<Employee> Employees = new List<Employee>(n);
+            List<Employee> Employees = new List<Employee>();
 
             for (int i = 1; i <= n; i++)
             {                
@@ -41,7 +41,7 @@ namespace Course
             Console.WriteLine("PAYMENTS");
             foreach (Employee employee in Employees)
             {
-                Console.WriteLine(employee);
+                Console.WriteLine(employee.Name + " - $" + employee.Payment().ToString("F2", CultureInfo.InvariantCulture));
             }
         }
     }
