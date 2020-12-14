@@ -25,7 +25,7 @@ namespace Course.Entities
         }
 
         // Sobrescrita ou Sobreposição
-        public override void Withdraw(double amount)
+        public sealed override void Withdraw(double amount)
         {
             base.Withdraw(amount);
             Balance -= 2.0;
