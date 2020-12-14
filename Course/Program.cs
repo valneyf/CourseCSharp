@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Collections.Generic;
 using Course.Entities;
-using Course.Entities.Enums;
 
 namespace Course
 {
@@ -10,41 +9,36 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter client data:");
-            Console.Write("Name: ");
-            string name = Console.ReadLine();
-            Console.Write("Email: ");
-            string email = Console.ReadLine();
-            Console.Write("Birth date (DD/MM/YYYY): ");
-            DateTime birthDate = DateTime.Parse(Console.ReadLine());
-            Console.WriteLine("Enter order data:");
-            Console.Write("Status: ");
-            OrderStatus status = Enum.Parse<OrderStatus>(Console.ReadLine());
+            Account acc = new Account(1001, "Alex", 0.0);
+            BusinessAccount bacc = new BusinessAccount(1002, "Maria", 0.0, 500.00);
 
-            Client client = new Client(name, email, birthDate);
+            // UPCASTING
 
-            Order order = new Order(status, client);
+            Account acc1 = bacc;
+            Account acc2 = new BusinessAccount(1003, "Bob", 0.0, 200.0);
+            Account acc3 = new SavingsAccount(1004, "Ana", 0.0, 0.01);
 
-            Console.Write("How many items to this order? ");
-            int n = int.Parse(Console.ReadLine());
+            // DOWNCASTING(Operação insegura)
+            // Downcasting mais seguro com a keyword "is"
 
-            for (int i = 1; i <= n; i++)
+            BusinessAccount acc4 = (BusinessAccount)acc2;
+            acc4.Loan(100.0);
+
+            // BusinessAccount aac5 = (BusinessAccount)acc3;
+            if (acc3 is BusinessAccount)
             {
-                Console.WriteLine($"Enter #{i} item data:");
-                Console.Write("Product name: ");
-                string prodName = Console.ReadLine();
-                Console.Write("Product price: ");
-                double prodPrice = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                Console.Write("Quantity: ");
-                int prodQuantity = int.Parse(Console.ReadLine());
-
-                OrderItem item = new OrderItem(prodQuantity, prodPrice, prodName);
-
-                order.AddItem(item);
+                BusinessAccount acc5 = (BusinessAccount)acc3;
+                acc5.Loan(200.0);
+                Console.WriteLine("Loan!");
             }
 
-            Console.WriteLine();
-            Console.WriteLine(order);
+            if (acc3 is SavingsAccount)
+            {
+                // Usando a keyword "as" ao inves de (SavingAccount)
+                SavingsAccount acc5 = acc3 as SavingsAccount;
+                acc5.UpdateBalance();
+                Console.WriteLine("Updated!");
+            }
         }
     }
 }
