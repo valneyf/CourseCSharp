@@ -23,5 +23,12 @@ namespace Course.Entities
         {
             Balance += Balance * InterestRate;
         }
+
+        // Sobrescrita ou Sobreposição
+        public override void Withdraw(double amount)
+        {
+            base.Withdraw(amount);
+            Balance -= 2.0;
+        }
     }
 }
