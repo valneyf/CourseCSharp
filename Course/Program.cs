@@ -9,51 +9,44 @@ namespace Course
     {
         static void Main(string[] args)
         {
-            List<Person> people = new List<Person>();
-            double totalTaxes = 0;
+            Console.Write("Room number: ");
+            int number = int.Parse(Console.ReadLine());
+            Console.Write("Check-in date (dd/MM/yyyy): ");
+            DateTime checkIn = DateTime.Parse(Console.ReadLine());
+            Console.Write(" Check-out date (dd/MM/yyyy: ");
+            DateTime checkOut = DateTime.Parse(Console.ReadLine());
 
-            Console.Write("Enter the number of tax payers: ");
-            int n = int.Parse(Console.ReadLine());
-
-            for (int i = 1; i <= n; i++)
+            if (checkOut <= checkIn)
             {
-                Console.WriteLine($"Tax payer #{i} data:");
-                Console.Write("Individual or company (i/c)? ");
-                char type = char.ToLower(char.Parse(Console.ReadLine()));
-                Console.Write("Name: ");
-                string name = Console.ReadLine();
-                Console.Write("Annual income: ");
-                double annualIncome = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                Console.WriteLine("Error in reservation: Check-out date must be after check-in date.");
+            }
+            else
+            {
+                Reservation reservation = new Reservation(number, checkIn, checkOut);
+                Console.WriteLine("Reservation: " + reservation);
 
-                if (type == 'i')
+                Console.WriteLine();
+                Console.WriteLine("Enter data to update the reservation:");
+                Console.Write("Check-in date (dd/MM/yyyy): ");
+                checkIn = DateTime.Parse(Console.ReadLine());
+                Console.Write("Check-out date (dd/MM/yyyy: ");
+                checkOut = DateTime.Parse(Console.ReadLine());
+
+                DateTime now = DateTime.Now;
+                if (checkIn < now || checkOut < now)
                 {
-                    Console.Write("Health expenditures: ");
-                    double healthExpenditures = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-
-                    people.Add(new Individual(name, annualIncome, healthExpenditures));
+                    Console.WriteLine("Error in reservation: Reservation dates for update must be future dates.");
+                }
+                else if (checkOut <= checkIn)
+                {
+                    Console.WriteLine("Error in reservation: Check-out date must be after check-in date.");
                 }
                 else
                 {
-                    Console.Write("Number of employees: ");
-                    int numberOfEmployees = int.Parse(Console.ReadLine());
-
-                    people.Add(new Company(name, annualIncome, numberOfEmployees));
+                    reservation.UpdateDates(checkIn, checkOut);
+                    Console.WriteLine("Reservation: " + reservation);
                 }
             }
-
-
-            Console.WriteLine();
-            Console.WriteLine("TAXES PAID:");
-            foreach (Person person in people)
-            {
-                totalTaxes += person.Tax();
-                Console.WriteLine(person.Name
-                    + ": $ "
-                    + person.Tax().ToString("F2", CultureInfo.InvariantCulture));
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("TOTAL TAXES: $ " + totalTaxes.ToString("F2", CultureInfo.InvariantCulture));
         }
     }
 }
