@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Course.Entities;
 using Course.Entities.Exceptions;
 
@@ -10,29 +11,28 @@ namespace Course
         {
             try
             {
-                Console.Write("Room number: ");
+                Console.WriteLine("Enter account data");
+                Console.Write("Number: ");
                 int number = int.Parse(Console.ReadLine());
-                Console.Write("Check-in date (dd/MM/yyyy): ");
-                DateTime checkIn = DateTime.Parse(Console.ReadLine());
-                Console.Write(" Check-out date (dd/MM/yyyy: ");
-                DateTime checkOut = DateTime.Parse(Console.ReadLine());
+                Console.Write("Holder: ");
+                string holder = Console.ReadLine();
+                Console.Write("Initial balance: ");
+                double balance = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                Console.Write("Withdraw limit: ");
+                double withdrawLimit = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-                Reservation reservation = new Reservation(number, checkIn, checkOut);
-                Console.WriteLine("Reservation: " + reservation);
+                Account account = new Account(number, holder, balance, withdrawLimit);
 
                 Console.WriteLine();
-                Console.WriteLine("Enter data to update the reservation:");
-                Console.Write("Check-in date (dd/MM/yyyy): ");
-                checkIn = DateTime.Parse(Console.ReadLine());
-                Console.Write("Check-out date (dd/MM/yyyy: ");
-                checkOut = DateTime.Parse(Console.ReadLine());
+                Console.Write("Enter amount for withdraw: ");
+                double amount = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                account.Withdraw(amount);
 
-                reservation.UpdateDates(checkIn, checkOut);
-                Console.WriteLine("Reservation: " + reservation);
+                Console.WriteLine("New balance: " + account.Balance.ToString("F2", CultureInfo.InvariantCulture));
             }
             catch (DomainException e)
             {
-                Console.WriteLine("Error in reservation: " + e.Message);
+                Console.WriteLine("Withdraw error: " + e.Message);
             }
             catch(FormatException e)
             {
