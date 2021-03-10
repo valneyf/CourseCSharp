@@ -24,7 +24,7 @@ namespace Course {
 
             CarRental carRental = new CarRental(start, finish, new Vehicle(model));
 
-            RentailService rentailService = new RentailService(hour, day);
+            RentailService rentailService = new RentailService(hour, day, new BrazilTaxService());
 
             rentailService.ProcessInvoice(carRental);
 
