@@ -1,47 +1,35 @@
 ﻿using System;
 using System.Globalization;
 using Course.Entities;
-using Course.Entities.Exceptions;
+using Course.Services;
 
-namespace Course
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            try
-            {
-                Console.WriteLine("Enter account data");
-                Console.Write("Number: ");
-                int number = int.Parse(Console.ReadLine());
-                Console.Write("Holder: ");
-                string holder = Console.ReadLine();
-                Console.Write("Initial balance: ");
-                double balance = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                Console.Write("Withdraw limit: ");
-                double withdrawLimit = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+namespace Course {
+    class Program {
+        static void Main(string[] args) {
 
-                Account account = new Account(number, holder, balance, withdrawLimit);
+            Console.WriteLine("Enter rental data");
+            Console.Write("Car model: ");
+            string model = Console.ReadLine();
 
-                Console.WriteLine();
-                Console.Write("Enter amount for withdraw: ");
-                double amount = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                account.Withdraw(amount);
+            Console.Write("Pickup (dd/MM/yyyy HH:mm): ");
+            DateTime start = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            Console.Write("Return (dd/MM/yyyy HH:mm): ");
+            DateTime finish = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
 
-                Console.WriteLine("New balance: " + account.Balance.ToString("F2", CultureInfo.InvariantCulture));
-            }
-            catch (DomainException e)
-            {
-                Console.WriteLine("Withdraw error: " + e.Message);
-            }
-            catch(FormatException e)
-            {
-                Console.WriteLine("Format error: " + e.Message);
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Unexpected error: " + e.Message);
-            }
+            Console.Write("Enter price per hour: ");
+            double hour = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+            Console.Write("Enter price per day: ");
+            double day = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+            CarRental carRental = new CarRental(start, finish, new Vehicle(model));
+
+            RentailService rentailService = new RentailService(hour, day);
+
+            rentailService.ProcessInvoice(carRental);
+
+            Console.WriteLine("INVOICE: ");
+            Console.WriteLine(carRental.Invoice);
         }
     }
 }
