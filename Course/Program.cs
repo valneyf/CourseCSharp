@@ -1,32 +1,31 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
+using System.IO;
 using Course.Entities;
-using Course.Services;
 
 namespace Course {
     class Program {
         static void Main(string[] args) {
+            HashSet<LogRecord> set = new HashSet<LogRecord>();
 
-            Console.WriteLine("Enter contract data");
-            Console.Write("Number: ");
-            int number = int.Parse(Console.ReadLine());
+            Console.Write("Enter file full path: ");
+            string path = Console.ReadLine();
 
-            Console.Write("Date (dd/MM/yyyy): ");
-            DateTime date = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            Console.Write("Contract value: ");
-            double totalValue = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-
-            Console.Write("Enter number of installments: ");
-            int months = int.Parse(Console.ReadLine());
-
-            Contract contract = new Contract(number, date, totalValue);
-
-            ContractService contractService = new ContractService(new PaypalService());
-
-            contractService.ProcessContract(contract, months);
-
-            Console.WriteLine("Installments: ");
-            contractService.ImpressInstallments();
+            try {
+                using (StreamReader sr = File.OpenText(path)) {
+                    while (!sr.EndOfStream) {
+                        string[] line = sr.ReadLine().Split(' ');
+                        string name = line[0];
+                        DateTime instant = DateTime.Parse(line[1]);
+                        set.Add(new LogRecord { Username = name, Instant = instant });
+                    }
+                    Console.WriteLine("Total users: " + set.Count);
+                }
+            }
+            catch (IOException e) {
+                Console.WriteLine(e.Message);
+            }
+            
         }
     }
 }
