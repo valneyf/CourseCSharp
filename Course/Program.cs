@@ -6,26 +6,27 @@ using Course.Entities;
 namespace Course {
     class Program {
         static void Main(string[] args) {
-            HashSet<LogRecord> set = new HashSet<LogRecord>();
+            SortedSet<int> courseAlex = new SortedSet<int>();            
 
-            Console.Write("Enter file full path: ");
-            string path = Console.ReadLine();
+            Console.Write("How many students for course A? ");
+            int studentsA = int.Parse(Console.ReadLine());
+            for (int i = 0; i < studentsA; i++) {
+                courseAlex.Add(int.Parse(Console.ReadLine()));
+            }
 
-            try {
-                using (StreamReader sr = File.OpenText(path)) {
-                    while (!sr.EndOfStream) {
-                        string[] line = sr.ReadLine().Split(' ');
-                        string name = line[0];
-                        DateTime instant = DateTime.Parse(line[1]);
-                        set.Add(new LogRecord { Username = name, Instant = instant });
-                    }
-                    Console.WriteLine("Total users: " + set.Count);
-                }
+            Console.Write("How many students for course B? ");
+            int studentsB = int.Parse(Console.ReadLine());
+            for (int i = 0; i < studentsB; i++) {
+                courseAlex.Add(int.Parse(Console.ReadLine()));
             }
-            catch (IOException e) {
-                Console.WriteLine(e.Message);
+
+            Console.Write("How many students for course C? ");
+            int studentsC = int.Parse(Console.ReadLine());
+            for (int i = 0; i < studentsC; i++) {
+                courseAlex.Add(int.Parse(Console.ReadLine()));
             }
-            
+               
+            Console.WriteLine("Total students: " + courseAlex.Count);
         }
     }
 }
