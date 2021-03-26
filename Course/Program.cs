@@ -6,27 +6,33 @@ using Course.Entities;
 namespace Course {
     class Program {
         static void Main(string[] args) {
-            SortedSet<int> courseAlex = new SortedSet<int>();            
+            Dictionary<string, int> election = new Dictionary<string, int>();
 
-            Console.Write("How many students for course A? ");
-            int studentsA = int.Parse(Console.ReadLine());
-            for (int i = 0; i < studentsA; i++) {
-                courseAlex.Add(int.Parse(Console.ReadLine()));
-            }
+            Console.Write("Enter file full path: ");
+            string path = Console.ReadLine();
 
-            Console.Write("How many students for course B? ");
-            int studentsB = int.Parse(Console.ReadLine());
-            for (int i = 0; i < studentsB; i++) {
-                courseAlex.Add(int.Parse(Console.ReadLine()));
-            }
+            try {
+                using (StreamReader sr = File.OpenText(path)) {
+                    while (!sr.EndOfStream) {
+                        string[] line = sr.ReadLine().Split(",");
 
-            Console.Write("How many students for course C? ");
-            int studentsC = int.Parse(Console.ReadLine());
-            for (int i = 0; i < studentsC; i++) {
-                courseAlex.Add(int.Parse(Console.ReadLine()));
+                        if (!election.ContainsKey(line[0])) {
+                            election.Add(line[0], int.Parse(line[1]));
+                        }
+                        else {
+                            election[line[0]] += int.Parse(line[1]);
+                        }
+                    }
+                }
+
+                Console.WriteLine("Result elections: ");
+                foreach (var candidate in election) {
+                    Console.WriteLine(candidate.Key + ": " + candidate.Value);
+                }
             }
-               
-            Console.WriteLine("Total students: " + courseAlex.Count);
+            catch (IOException e) {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
